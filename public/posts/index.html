@@ -28,7 +28,7 @@
 
 
 
-
+<link rel="stylesheet" href="http://localhost:1313/style.css">
 
 
 
@@ -65,6 +65,16 @@
 
 
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 
@@ -164,7 +174,11 @@
 
         <div class="post-content">
           
-            <p>apenas tesntabndo</p>
+            <p>apenas</p>
+<p>Teste:</p>
+<p>$$
+E = mc^2
+$$</p>
           
         </div>
 
@@ -204,9 +218,11 @@
 
         <div class="post-content">
           
-            <h1 id="entendendo-o-problema">Entendendo o problema</h1>
+            <blockquote>
+<p>IMPORTANTE: Este posto foi escrito por um estudante que ainda está aprendendo, então pode conter erros conceituais. Cheque as informações com livros e, caso encontre algum erro pode entrar em contato comigo para que eu corrija.</p>
+</blockquote>
+<h1 id="entendendo-o-problema">Entendendo o problema</h1>
 <p>Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.</p>
-<p>Na vida real, quando se usa um código que executa sequencialmente, temos um longo processo tomando tempo de processamento na CPU e devido ao gerenciamento (em termos técnicos &ldquo;Escalonamento&rdquo;), esse processo vai ser retirado e reinserido na execução, algo que é chamado de preempção.</p>
           
         </div>
 

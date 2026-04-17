@@ -4,29 +4,40 @@ title = 'Pedro Costa | Portfolio'
 theme = 're-terminal'
 
 [author]
-  name = "Pedro Costa"
-  email = "felipepedro752@gmail.com"
+name = "Pedro Costa"
+email = "[felipepedro752@gmail.com](mailto:felipepedro752@gmail.com)"
 
 [params]
-  # Configurações essenciais do Re-Terminal
-  contentTypeName = "posts"
-  showLineNumbers = true
-  themeColor = "blue" # ou "blue", "green", "pink", "red"
-  
+contentTypeName = "posts"
+showLineNumbers = true
+themeColor = "blue"
 
-  [params.logo]
-    logoText = "pedrocosta@terminal:~$"
-    logoHomeLink = "/"
+[params.logo]
+logoText = "pedrocosta@terminal:~$"
+logoHomeLink = "/"
+
+# 🔥 HABILITA GOLDMARK + HTML + LATEX
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true  # necessário pra MathJax/KaTeX
+
+[markup.highlight]
+  noClasses = false
+
+# 📌 MENU
 
 [menu]
-  [[menu.main]]
-    identifier = "posts"
-    name = "Arquivo"
-    url = "/posts"
-    weight = 10
+[[menu.main]]
+identifier = "posts"
+name = "Arquivo"
+url = "/posts"
+weight = 10
 
-  [[menu.main]]
-    identifier = "about"
-    name = "Sobre"
-    url = "/about"
-    weight = 20
+[[menu.main]]
+identifier = "about"
+name = "Sobre"
+url = "/about"
+weight = 20
+

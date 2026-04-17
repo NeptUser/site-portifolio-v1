@@ -15,4 +15,10 @@ color = "" #color from the theme settings
 +++
 
 
-apenas tesntabndo
+apenas 
+
+Teste:
+
+$$
+E = mc^2
+$$
