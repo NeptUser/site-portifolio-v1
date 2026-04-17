@@ -1,0 +1,32 @@
+baseURL = 'https://exemplo.org/'
+languageCode = 'pt-br'
+title = 'Pedro Costa | Portfolio'
+theme = 're-terminal'
+
+[author]
+  name = "Pedro Costa"
+  email = "felipepedro752@gmail.com"
+
+[params]
+  # Configurações essenciais do Re-Terminal
+  contentTypeName = "posts"
+  showLineNumbers = true
+  themeColor = "blue" # ou "blue", "green", "pink", "red"
+  
+
+  [params.logo]
+    logoText = "pedrocosta@terminal:~$"
+    logoHomeLink = "/"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Arquivo"
+    url = "/posts"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "about"
+    name = "Sobre"
+    url = "/about"
+    weight = 20

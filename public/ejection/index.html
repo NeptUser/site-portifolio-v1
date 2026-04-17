@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Desenvolvendo mecanismo de estágios para foguetes de garrafa PET :: Pedro Costa | Portfolio</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contextualizando o projeto No ano de 2025, a OBAFOG (Olimpíada Brasileira de Foguetes) junto ao Iberê do Manual do Mundo lançaram uma nova categoria da competição para foguetes de garrafa PET de dois estágios. O mais interessante dessa categoria foi ver a velocidade com a qual as equipes, formadas por aluno do ensino médio, rapidamente construiram mecanismos realmente inteligentes para soltura do segundo estágio, até mesmo usaram eletrônica controlada via rádio-frequeência.
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="http://localhost:1313/ejection/" />
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="http://localhost:1313/img/theme-colors/blue.png">
+  <link rel="apple-touch-icon" href="http://localhost:1313/img/theme-colors/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Desenvolvendo mecanismo de estágios para foguetes de garrafa PET">
+<meta property="og:description" content="Contextualizando o projeto No ano de 2025, a OBAFOG (Olimpíada Brasileira de Foguetes) junto ao Iberê do Manual do Mundo lançaram uma nova categoria da competição para foguetes de garrafa PET de dois estágios. O mais interessante dessa categoria foi ver a velocidade com a qual as equipes, formadas por aluno do ensino médio, rapidamente construiram mecanismos realmente inteligentes para soltura do segundo estágio, até mesmo usaram eletrônica controlada via rádio-frequeência.
+" />
+<meta property="og:url" content="http://localhost:1313/ejection/" />
+<meta property="og:site_name" content="Pedro Costa | Portfolio" />
+
+  
+  
+  <meta property="og:image" content="http://localhost:1313/">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2026-03-25 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+</head>
+<body class="blue">
+
+
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    pedrocosta@terminal:~$
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/posts">Projetos</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/posts" >Projetos</a></li>
+        
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://localhost:1313/ejection/">Desenvolvendo mecanismo de estágios para foguetes de garrafa PET</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2026-03-25</time><span class="post-author">Pedrinho</span>
+    
+</div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="http://localhost:1313/tags/obafog/">obafog</a>&nbsp;
+      
+      #<a href="http://localhost:1313/tags/garrafa-pet/">garrafa pet</a>&nbsp;
+      
+      #<a href="http://localhost:1313/tags/manual-do-mundo/">manual do mundo</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+
+  
+
+  <div class="post-content"><div>
+        <h2 id="contextualizando-o-projeto">Contextualizando o projeto<a href="#contextualizando-o-projeto" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>No ano de 2025, a <a href="http://www.oba.org.br/site/?idcat=29&amp;p=conteudo&amp;pag=conteudo">OBAFOG</a> (Olimpíada Brasileira de Foguetes) junto ao Iberê do Manual do Mundo lançaram uma nova categoria da competição para foguetes de garrafa PET de dois estágios. O mais interessante dessa categoria foi ver a velocidade com a qual as equipes, formadas por aluno do ensino médio, rapidamente construiram mecanismos realmente inteligentes para soltura do segundo estágio, até mesmo usaram eletrônica controlada via rádio-frequeência.</p>
+<p>Vendo todas essa ideias incríveis, me inspirei e resolvi criar um sistema eletrônico e autônomo de soltura do segundo estágio, primeiro porque é legal e segundo porque vejo isso como uma forma de tornar a competição mais acessível. Por isso, estou criando também esse artigo que vai acompanhar o desenvolvimento deste mecanismo, e que ao final será totalmente disponibilizado a quem quiser utilizar de forma totalmente gratuita, ou seja, open source total. Outra coisa que me anima bastante é pensar como as equipes vão modificar e melhorar esse mecanismo, me pergunto em quanto tempo essa primeira versão se tornará obsoleta.</p>
+<p>Voltando a falar do mecanismo em sí, a ideia é que ele possa como</p>
+<p>Por fim, semanalmente (ou não), eu vou fazer updates por aqui do que eu fiz e principalmente porque eu fiz, e já vou disponibilizando as partes. Claro que ao final eu vou fazer um artigo bonitinho compilando tudo, e especialmente com uma linguagem mais formal, já neste &ldquo;cederno de engenharia&rdquo;, a ideia é parecer uma conversa de nerds em um bar, especialmente para que eu possa escrever mais rapidamente.</p>
+<p>Se tiver alguma sugestão, dúvida, crítica, elogio ou ameaça, pode me mandar um email ou chamar nas redes sociais, X ou Instagram.</p>
+<h2 id="direto-ao-problema">Direto ao problema<a href="#direto-ao-problema" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<blockquote>
+<p>Agora que sabemos o que quero fazer, precisamos decidir como fazer!</p>
+</blockquote>
+<h3 id="restrições-do-projeto">Restrições do projeto<a href="#restrições-do-projeto" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Já tendo a premissa, precisamos ver as nossas restrições; felizmente, são poucas:</p>
+<ol>
+<li>Funcionar com qualquer perfil de voo.</li>
+<li>Ser o mais leve possível.</li>
+<li>Fácil de operar.</li>
+<li>(OPICIONAL) Ter algum nível de estanqueidade.</li>
+</ol>
+<p>Acho que aqui é melhor eu explicar como cheguei nesses requisitos.</p>
+<h4 id="1-funcionar-em-qualquer-perfil-de-voo">1. Funcionar em qualquer perfil de voo.<a href="#1-funcionar-em-qualquer-perfil-de-voo" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>O que quero dizer com esse requisito? Basicamente, me refiro ao mecânismo funcionar adequadamente em qualquer voo, seja um de 10m ou um de 500m, independente de ser um voo oblíquo ou vertical.</p>
+<h4 id="2-ser-o-mais-leve-possível">2. Ser o mais leve possível<a href="#2-ser-o-mais-leve-possível" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Essa eu imagino que seja intuitiva, já que estamos falando de uma aplicação aeroespacial, certo? ERRADO! No foguetemodelismo universitário, podemos propositalmente deixar algo mais pesado, já que em competições como a <a href="https://www.lasc.space">LASC</a>, temos alvos de altitude a atingir. Na OBA, a ideia é ter o maior alcance (distância lateral), dito isso, sim, o mais leve possível, por favor!</p>
+<h4 id="3-fácil-de-operar">3. Fácil de operar<a href="#3-fácil-de-operar" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Requisito muito importante porque esse mecanismo poderá ser usado por alunos que entendem bem de eletrônica, mas também quero que o aventureiro que encontrou esse projeto por acaso seja capaz de usar. Além da eletrônica, a parte mecânica precisa ser o mais simples possível e que seja confiável para ser usada em campo.</p>
+<h4 id="4-estanqueidade">4. Estanqueidade<a href="#4-estanqueidade" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Coloquei como opcional, mas na verdade é bem importante porque esses foguetes usam água, ou vinagre (que é uma solução aquosa) como um de seus componentes propelentes, e é interressante que o mecanismo resista a alguns usos e muito provável que ele fique bem onde pode ser molhado.</p>
+<h3 id="e-qual-a-solução">E qual a solução?<a href="#e-qual-a-solução" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Bem, vamos dividir isso em eletrônica e mecânica, ambas devem respeitar as restrições iniciais.</p>
+<h4 id="eletrônica-ou-eletônica-para-os-mais-intimos">Eletrônica, ou eletônica para os mais intimos&hellip;<a href="#eletrônica-ou-eletônica-para-os-mais-intimos" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Para a eletrônica, precisamos lidar com o hardware e software.</p>
+<h5 id="quanto-ao-hardware-o-circuito-homi">Quanto ao hardware (o circuito, homi)<a href="#quanto-ao-hardware-o-circuito-homi" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h5>
+<p>Pro hardware, a ideia é que seja algo simples, isso implica em mais algumas restrições, como:</p>
+<ul>
+<li>Poucos componentes;</li>
+<li>Componentes baratos e comuns;</li>
+<li>Componentes apenas TH (Trough Hole).</li>
+</ul>
+<p>As duas primeiras restrições são simples de entender, já a tarceira é imposta também na ideia de facilitar a montagem da placa, inclusive por pessoas sem experiência prévia.</p>
+<p><strong>Vamos aos componentes escolhidos&hellip;</strong></p>
+<ol>
+<li>
+<p>Attiny85
+Um microcontrolador pequeno, com arquiterura avr (a mesma do arduino) que consome pouco [falar melhor sobre ele]</p>
+</li>
+<li>
+<p>MPU-6050</p>
+</li>
+</ol>
+<p>Esse é um IMU (Inecial Measurement Unit) [falar melhor sobre]</p>
+<ol start="3">
+<li>Servo SG-90</li>
+</ol>
+<p>[falar melhor sopbre]</p>
+<ol start="4">
+<li>Bateria????</li>
+</ol>
+<h5 id="quanto-ao-firmware-software">Quanto ao firmware (software)<a href="#quanto-ao-firmware-software" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h5>
+
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2026 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/mirus-ua/hugo-theme-re-terminal" target="_blank">Theme</a> made by <a href="https://github.com/mirus-ua" target="_blank">Mirus</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Process on Pedro Costa | Portfolio</title>
+    <link>http://localhost:1313/tags/process/</link>
+    <description>Recent content in Process on Pedro Costa | Portfolio</description>
+    <generator>Hugo</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Thu, 16 Apr 2026 16:50:58 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/process/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Como usar 100% da CPU com matrizes</title>
+      <link>http://localhost:1313/posts/matrizes/</link>
+      <pubDate>Thu, 16 Apr 2026 16:50:58 -0500</pubDate>
+      <guid>http://localhost:1313/posts/matrizes/</guid>
+      <description>&lt;h1 id=&#34;entendendo-o-problema&#34;&gt;Entendendo o problema&lt;/h1&gt;&#xA;&lt;p&gt;Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.&lt;/p&gt;&#xA;&lt;p&gt;Na vida real, quando se usa um código que executa sequencialmente, temos um longo processo tomando tempo de processamento na CPU e devido ao gerenciamento (em termos técnicos &amp;ldquo;Escalonamento&amp;rdquo;), esse processo vai ser retirado e reinserido na execução, algo que é chamado de preempção.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

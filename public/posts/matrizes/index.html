@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Como usar 100% da CPU com matrizes :: Pedro Costa | Portfolio</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Entendendo o problema Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.
+Na vida real, quando se usa um código que executa sequencialmente, temos um longo processo tomando tempo de processamento na CPU e devido ao gerenciamento (em termos técnicos &ldquo;Escalonamento&rdquo;), esse processo vai ser retirado e reinserido na execução, algo que é chamado de preempção.
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="http://localhost:1313/posts/matrizes/" />
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="http://localhost:1313/img/theme-colors/blue.png">
+  <link rel="apple-touch-icon" href="http://localhost:1313/img/theme-colors/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Como usar 100% da CPU com matrizes">
+<meta property="og:description" content="Entendendo o problema Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.
+Na vida real, quando se usa um código que executa sequencialmente, temos um longo processo tomando tempo de processamento na CPU e devido ao gerenciamento (em termos técnicos &ldquo;Escalonamento&rdquo;), esse processo vai ser retirado e reinserido na execução, algo que é chamado de preempção.
+" />
+<meta property="og:url" content="http://localhost:1313/posts/matrizes/" />
+<meta property="og:site_name" content="Pedro Costa | Portfolio" />
+
+  
+    <meta property="og:image" content="http://localhost:1313/img/favicon/blue.png">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2026-04-16 16:50:58 -0500 -0500" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+</head>
+<body class="blue">
+
+
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    pedrocosta@terminal:~$
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/posts">Arquivo</a></li>
+        
+      
+        
+          <li><a href="/about">Sobre</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/posts" >Arquivo</a></li>
+        
+      
+        
+          <li><a href="/about" >Sobre</a></li>
+        
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://localhost:1313/posts/matrizes/">Como usar 100% da CPU com matrizes</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2026-04-16</time><span class="post-author">Pedrinho</span>
+    
+</div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="http://localhost:1313/tags/matrizes/">matrizes</a>&nbsp;
+      
+      #<a href="http://localhost:1313/tags/paralelismo/">paralelismo</a>&nbsp;
+      
+      #<a href="http://localhost:1313/tags/threads/">threads</a>&nbsp;
+      
+      #<a href="http://localhost:1313/tags/process/">process</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+
+  
+
+  <div class="post-content"><div>
+        <h1 id="entendendo-o-problema">Entendendo o problema<a href="#entendendo-o-problema" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.</p>
+<p>Na vida real, quando se usa um código que executa sequencialmente, temos um longo processo tomando tempo de processamento na CPU e devido ao gerenciamento (em termos técnicos &ldquo;Escalonamento&rdquo;), esse processo vai ser retirado e reinserido na execução, algo que é chamado de preempção.</p>
+<p>Bom, depois de largar essas informações, vamos começar a tratar do objetivo deste post, onde eu vou abordar a cerca de um trabalho que realizei na primeira unidade da disciplina de Sistemas Operacionais na UFRN.</p>
+<p>Basicamente, o nosso problema é a multiplicação de matrizes, cálculo bem conhecido, especialmente por aqueles na área de inteligência artificial.</p>
+<h2 id="mas-o-que-tem-de-mais-com-a-multiplicação-de-matrizes">Mas o que tem de mais com a multiplicação de matrizes?<a href="#mas-o-que-tem-de-mais-com-a-multiplicação-de-matrizes" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Vamos começar olhando o código:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n1; i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> m2; j<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        matrizC[i][j] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> m1; k<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            matrizC[i][j] <span style="color:#f92672">+=</span> matrizA[i][k] <span style="color:#f92672">*</span> matrizB[k][j];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Veja que pra multiplicação de matrizes, usamos 3 laços <code>for()</code> para calcular cada elemento, algo que quando trabalhamos com poucos elementos, como por exemplo uma matriz de ordem 100, leva pouquíssimo tempo; considerando a nossa noção de tempo, podemos até dizer que é instantâneo.</p>
+<blockquote>
+<p>Agora, imagine a multiplicação de uma matriz de ordem 1000, ou 10000, ou 100000</p>
+</blockquote>
+<p>Adicionando um pouco de matemática (pra quem é desses), a complexidade da operação de multiplicação de uma matriz pode ser representada pela fórmula:
+$$
+C(n) = n^3
+$$
+Onde n é a ordem da matriz, ou seja, seu tamanho. Também dá pra calcular o tempo que levaria pra calcular isso com matemática, mas eu ainda não cheguei lá, por isso, vamos de C++.</p>
+<h2 id="como-lidar-com-matrizes-grandes">Como lidar com matrizes grandes?<a href="#como-lidar-com-matrizes-grandes" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>No caso de matrizes grandes, é possível paralelizar o trabalho, ou seja, dividir o trabalho para que ele possa ser processado simultaneamente.</p>
+<p>Trocando em miúdos&hellip;</p>
+<blockquote>
+<p>Se um pedreiro constrói uma casa em 12 meses, 12 pedreiros constroem uma em 1 mês?</p>
+</blockquote>
+<p>De forma simplória, podemos dizer que sim, mas na pratica sabemos que não é bem assim. Claro que 12 pedreiros vão construir uma casa mais rápido, porém há um limite, nem toda tarefa pode ser dividida, e nesse momento não há ganho na paralelização. Algo como:</p>
+<blockquote>
+<p>9 grávidas não tem um bebê em um mês</p>
+</blockquote>
+<p>No nosso, caso, podemos sim fatiar a matriz que vamos multiplicar e dividir ela para que sejam calculadas &ldquo;ao mesmo tempo&rdquo;.</p>
+<h2 id="processos-e-threads">Processos e Threads<a href="#processos-e-threads" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+
+      </div></div>
+
+  
+    
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h"></span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        <span class="button previous">
+            <a href="http://localhost:1313/posts/teste/">
+                <span class="button__icon">←</span>
+                <span class="button__text">Teste</span>
+            </a>
+        </span>
+        
+        
+        <span class="button next">
+            <a href="http://localhost:1313/posts/ejection/">
+                <span class="button__text">Desenvolvendo mecanismo de estágios para foguetes de garrafa PET</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2026 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/mirus-ua/hugo-theme-re-terminal" target="_blank">Theme</a> made by <a href="https://github.com/mirus-ua" target="_blank">Mirus</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

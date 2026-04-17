@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Manual Do Mundo on Pedro Costa | Portfolio</title>
+    <link>http://localhost:1313/tags/manual-do-mundo/</link>
+    <description>Recent content in Manual Do Mundo on Pedro Costa | Portfolio</description>
+    <generator>Hugo</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Wed, 25 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/manual-do-mundo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Desenvolvendo mecanismo de estágios para foguetes de garrafa PET</title>
+      <link>http://localhost:1313/posts/ejection/</link>
+      <pubDate>Wed, 25 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/ejection/</guid>
+      <description>&lt;h2 id=&#34;contextualizando-o-projeto&#34;&gt;Contextualizando o projeto&lt;/h2&gt;&#xA;&lt;p&gt;No ano de 2025, a &lt;a href=&#34;http://www.oba.org.br/site/?idcat=29&amp;amp;p=conteudo&amp;amp;pag=conteudo&#34;&gt;OBAFOG&lt;/a&gt; (Olimpíada Brasileira de Foguetes) junto ao Iberê do Manual do Mundo lançaram uma nova categoria da competição para foguetes de garrafa PET de dois estágios. O mais interessante dessa categoria foi ver a velocidade com a qual as equipes, formadas por aluno do ensino médio, rapidamente construiram mecanismos realmente inteligentes para soltura do segundo estágio, até mesmo usaram eletrônica controlada via rádio-frequeência.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
