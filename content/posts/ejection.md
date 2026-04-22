@@ -6,6 +6,7 @@ cover = ""
 coverCaption = ""
 description = ""
 tags=["obafog", "garrafa pet", "manual do mundo"]
+draft = true
 +++
 
 ## Contextualizando o projeto
