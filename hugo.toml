@@ -1,7 +1,7 @@
-baseURL = 'https://neptuser.github.io/'
-languageCode = 'pt-br'
-title = 'Pedro Costa | Portfolio'
-theme = 're-terminal'
+baseURL = "https://neptuser.github.io/"
+languageCode = "pt-br"
+title = "Pedro Costa | Portfolio"
+theme = "re-terminal"
 
 [author]
 name = "Pedro Costa"
