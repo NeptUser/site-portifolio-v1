@@ -1,4 +1,4 @@
-baseURL = 'https://exemplo.org/'
+baseURL = 'https://neptuser.github.io/'
 languageCode = 'pt-br'
 title = 'Pedro Costa | Portfolio'
 theme = 're-terminal'
