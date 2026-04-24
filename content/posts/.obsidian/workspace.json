@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6f2ba2dc2395faf1",
+        "id": "7e1eee62ad02ff34",
         "type": "tabs",
         "children": [
           {
-            "id": "ccdd827d60540905",
+            "id": "15015c4d48112fcd",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -183,12 +183,19 @@
       "bases:Criar nova base": false
     }
   },
-  "active": "ccdd827d60540905",
+  "active": "15015c4d48112fcd",
   "lastOpenFiles": [
+    "matrizes/Pasted image 20260424095557.png",
+    "matrizes/Pasted image 20260424101550.png",
+    "matrizes/index.md",
+    "matrizes/processamento100.png",
+    "matrizes/Pasted image 20260424095129.png",
+    "matrizes/Pasted image 20260424093810.png",
+    "matrizes/Pasted image 20260423115319.png",
+    "matrizes/Pasted image 20260424095348.png",
+    "matrizes/comparativo3200.png",
     "matrizes/fluxogramaParalelo.png",
     "matrizes/Untitled-2026-04-17-1222.png",
-    "matrizes/index.md",
-    "matrizes/Code_Generated_Image(4).png",
     "matrizes.md",
     "matrizes/matrizes.md",
     "matrizes"
