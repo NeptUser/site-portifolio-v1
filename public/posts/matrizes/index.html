@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Como usar 100% da CPU com matrizes :: Pedro Costa | Portfolio</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=" IMPORTANTE: Este post foi escrito por um estudante que ainda está aprendendo, então pode conter erros conceituais. Cheque as informações com livros e, caso encontre algum erro pode entrar em contato comigo para que eu corrija.
+Entendendo o problema Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.
+" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="https://neptuser.github.io/posts/matrizes/" />
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://neptuser.github.io/styles.css">
+
+
+
+<link rel="stylesheet" href="https://neptuser.github.io/style.css">
+
+
+
+  <link rel="shortcut icon" href="https://neptuser.github.io/img/theme-colors/blue.png">
+  <link rel="apple-touch-icon" href="https://neptuser.github.io/img/theme-colors/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Como usar 100% da CPU com matrizes">
+<meta property="og:description" content=" IMPORTANTE: Este post foi escrito por um estudante que ainda está aprendendo, então pode conter erros conceituais. Cheque as informações com livros e, caso encontre algum erro pode entrar em contato comigo para que eu corrija.
+Entendendo o problema Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.
+" />
+<meta property="og:url" content="https://neptuser.github.io/posts/matrizes/" />
+<meta property="og:site_name" content="Pedro Costa | Portfolio" />
+
+  
+    <meta property="og:image" content="https://neptuser.github.io/img/favicon/blue.png">
+  
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2026-04-16 16:50:58 -0500 -0500" />
+
+
+
+
+
+
+
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+
+</head>
+<body class="blue">
+
+
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    pedrocosta@terminal:~$
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/posts">Arquivo</a></li>
+        
+      
+        
+          <li><a href="/about">Sobre</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/posts" >Arquivo</a></li>
+        
+      
+        
+          <li><a href="/about" >Sobre</a></li>
+        
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://neptuser.github.io/posts/matrizes/">Como usar 100% da CPU com matrizes</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2026-04-16</time><span class="post-author">Pedrinho</span>
+    
+</div>
+
+  
+    <span class="post-tags">
+      
+      #<a href="https://neptuser.github.io/tags/matrizes/">matrizes</a>&nbsp;
+      
+      #<a href="https://neptuser.github.io/tags/paralelismo/">paralelismo</a>&nbsp;
+      
+      #<a href="https://neptuser.github.io/tags/threads/">threads</a>&nbsp;
+      
+      #<a href="https://neptuser.github.io/tags/process/">process</a>&nbsp;
+      
+    </span>
+  
+  
+
+
+
+  
+
+  <div class="post-content"><div>
+        <blockquote>
+<p>IMPORTANTE: Este post foi escrito por um estudante que ainda está aprendendo, então pode conter erros conceituais. Cheque as informações com livros e, caso encontre algum erro pode entrar em contato comigo para que eu corrija.</p>
+</blockquote>
+<h1 id="entendendo-o-problema">Entendendo o problema<a href="#entendendo-o-problema" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Nas nossas primeiras aulas de programação, sempre é dito a nós que o código é executado de cima pra baixo e da esquerda pra direita; o que é verdade, porém depende.</p>
+<p>Na vida real, quando se usa um código que executa sequencialmente, temos um longo processo tomando tempo de processamento na CPU e devido ao gerenciamento (em termos técnicos &ldquo;Escalonamento&rdquo;), esse processo vai ser retirado e reinserido na execução, algo que é chamado de preempção.</p>
+<p>Bom, depois de largar essas informações, vamos começar a tratar do objetivo deste post, onde eu vou abordar a cerca de um trabalho que realizei na primeira unidade da disciplina de Sistemas Operacionais na UFRN.</p>
+<p>Basicamente, o nosso problema é a multiplicação de matrizes, cálculo bem conhecido, especialmente por aqueles na área de inteligência artificial.</p>
+<h2 id="mas-o-que-tem-de-mais-com-a-multiplicação-de-matrizes">Mas o que tem de mais com a multiplicação de matrizes?<a href="#mas-o-que-tem-de-mais-com-a-multiplicação-de-matrizes" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Vamos começar olhando o código:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m2</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">matrizC</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">m1</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">matrizC</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">matrizA</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrizB</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Veja que pra multiplicação de matrizes, usamos 3 laços <code>for()</code> para calcular cada elemento, algo que quando trabalhamos com poucos elementos, como por exemplo uma matriz de ordem 100, leva pouquíssimo tempo; considerando a nossa noção de tempo, podemos até dizer que é instantâneo.</p>
+<blockquote>
+<p>Agora, imagine a multiplicação de uma matriz de ordem 1000, ou 10000, ou 100000</p>
+</blockquote>
+<p>Adicionando um pouco de matemática (pra quem é desses), a complexidade da operação de multiplicação de uma matriz pode ser representada pela fórmula:</p>
+<p>$$
+C(n) = n^3
+$$</p>
+<p>Visualizando de uma forma mais gráfica, temos:</p>
+<div style="text-align: center;">
+  <img src="Code_Generated_Image(4).png" width="500">
+</div>
+<p>Onde $n$ é a ordem da matriz, ou seja, seu tamanho. Também dá pra calcular o tempo que levaria pra calcular isso com matemática, mas eu ainda não cheguei lá, por isso, vamos de C++.</p>
+<hr>
+<h2 id="como-lidar-com-matrizes-grandes">Como lidar com matrizes grandes?<a href="#como-lidar-com-matrizes-grandes" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>No caso de matrizes grandes, é possível paralelizar o trabalho, ou seja, dividir o trabalho para que ele possa ser processado simultaneamente.</p>
+<p>Trocando em miúdos&hellip;</p>
+<blockquote>
+<p>Se um pedreiro constrói uma casa em 12 meses, 12 pedreiros constroem uma em 1 mês?</p>
+</blockquote>
+<p>De forma simplória, podemos dizer que sim, mas na prática sabemos que não é bem assim. Claro que 12 pedreiros vão construir uma casa mais rápido, porém há um limite: nem toda tarefa pode ser dividida.</p>
+<blockquote>
+<p>9 grávidas não têm um bebê em um mês</p>
+</blockquote>
+<p>No caso desta segunda frase, estamos lidando com um problema essencialmente indivisível. Já no exemplo dos pedreiros, podemos dividir a atividade.</p>
+<blockquote>
+<p>Quanto mais pedreiros, menos tempo?</p>
+</blockquote>
+<p>Depende. Outros fatores entram na conta:</p>
+<ul>
+<li>Você vai conseguir suprir materiais para todos?</li>
+<li>Eles terão espaço suficiente para trabalhar? <em>(considere o pedreiro como um cilindro)</em></li>
+</ul>
+<p>Além disso, algumas atividades dependem de outras já concluídas.</p>
+<hr>
+<h2 id="cálculo-sequencial">Cálculo sequencial<a href="#cálculo-sequencial" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Antes de seguirmos com o paralelismo, vamos fazer a multiplicação de matrizes de forma sequencial para termos uma base.
+O nosso padrão será duas matrizes quadradas de ordem 3200, preenchidas com valores aleatórios de 0 até 1000.
+Se você estiver implementando este código, use a biblioteca <code>vector</code> para alocar os arrays bidimensionais (matriz), porque o método tradicional <code>int matrizA[i][j]</code> não escala bem.</p>
+<div>
+$$
+\begin{bmatrix}
+a_{1,1} & \dots & a_{1,3200} \\
+\vdots & \ddots & \vdots \\
+a_{3200,1} & \dots & a_{3200,3200}
+\end{bmatrix}
+\times
+\begin{bmatrix}
+b_{1,1} & \dots & b_{1,3200} \\
+\vdots & \ddots & \vdots \\
+b_{3200,1} & \dots & b_{3200,3200}
+\end{bmatrix}
+=
+\begin{bmatrix}
+c_{1,1} & \dots & c_{1,3200} \\
+\vdots & \ddots & \vdots \\
+c_{3200,1} & \dots & c_{3200,3200}
+\end{bmatrix}
+$$
+</div>
+<p>A pouco eu mostrei o código que realiza essa multiplicação. Vamos usar 10 iterações para obter um tempo médio.</p>
+<p>Fazendo isso, obtivemos:</p>
+<ul>
+<li>Tempo total: <strong>123.367100 s</strong></li>
+<li>Aproximadamente: <strong>2 min e 3 s</strong></li>
+</ul>
+<p>Com isso, podemos seguir para a paralelização.</p>
+<hr>
+<h2 id="processos-e-threads">Processos e Threads<a href="#processos-e-threads" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Neste post, vou mostrar o uso de processos e threads para paralelizar o processamento.</p>
+<p>A ideia é simples: dividir a matriz e atribuir partes para cada unidade de execução.vai receber a sua fatia pra calcular o resultado, assim como pode ser visto no fluxograma abaixo:</p>
+<div style="text-align: center;">
+  <img src="fluxogramaParalelo.png" width="500">
+</div>
+No código que estou utilizando, cada entidade tem seu próprio arquivo de saída, onde ele armazena o elemento e seu resultado, além do tempo decorrido na thread/processo.
+<p>Assim como no cálculo sequencial, vou realizar 10 iterações em cada abordagem, e cada bateria de 10 iterações vai ser executada com diferentes quantidades de unidades de execução; mais especificamente 2, 4, 8 e 16 threads/processos.</p>
+<p>O tempo a ser considerado será o pior tempo entre cada unidade na execução, sendo ele calculado pela própria função de multiplicação de matriz a partir do uso da biblioteca <code>chronos</code>.</p>
+<h3 id="processos">Processos<a href="#processos" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<blockquote>
+<p>IMPORTANTE: Nesta implementação de processos é necessário usar Linux ou mac, devido ao uso da <code>unistd.h</code>. Caso esteja usando windows, você pode mudar a implementação coma a biblioteca específica do windows ou usar o WSL.</p>
+</blockquote>
+<p>Basicamente, um processo é uma instância de um programa, ou o programa em sí; cada processo tem seu contexto de software e de hardware e tudo isso é uma atividade ativa que consome processamento do CPU.
+Cada processo tem seu próprio registrador, contador de programa, espaço de endereçamento e  o gerenciamento de estado (feito pelo escalonador).</p>
+<p>Para criar os processos, utilizamos a função <code>fork()</code>que origina processos filhos a partir de um processo pai. Cada processo pode ser identificado com seu PID (Process Identification), e usando ele podemos distinguir o pai de seus filhos, e a partir disso atribuímos o código a ser utilizado pelos filhos.</p>
+<p>Também enviamos aos filhos qual parte da matriz eles irão ser responsáveis por calcular, ao invés das dimensões completas.</p>
+<p>No nosso código, a implementação ficou assim:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// Fatiando a matriz
+</span></span></span><span class="line"><span class="cl"><span class="n">divProcessos</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">/</span> <span class="n">numProcessos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Loop for para criar os processos
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">numProcessos</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">perror</span><span class="p">(</span><span class="s">&#34;Falha no fork&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Passa o código para os processos filhos
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">inicio</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">divProcessos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">fim</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">numProcessos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="nl">n1</span> <span class="p">:</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">divProcessos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Cria arquivo de saída e chama a função de multiplicação
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">nomeArq</span> <span class="o">=</span> <span class="s">&#34;resultadoProcess&#34;</span><span class="o">+</span> 
+</span></span><span class="line"><span class="cl">					        <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">					        <span class="o">+</span><span class="s">&#34;_P&#34;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">numProcessos</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">					        <span class="o">+</span> <span class="s">&#34;_it&#34;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">it</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                            <span class="o">+</span> <span class="s">&#34;_p&#34;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#34;.txt&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">multiplicaMatriz</span><span class="p">(</span><span class="n">inicio</span><span class="p">,</span> <span class="n">fim</span><span class="p">,</span> <span class="n">matrizA</span><span class="p">,</span> <span class="n">matrizB</span><span class="p">,</span> <span class="n">matrizC</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">nomeArq</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// O pai espera os filhos terminarem
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">numProcessos</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wait</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Nas rodadas de teste obtivemos os seguintes tempos médios:</p>
+<center>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-c3ow">Nº de processos</th>
+    <th class="tg-c3ow">Tempo médio (s)</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">2</td>
+    <td class="tg-0pky">73.978550</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">42.505980</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">8</td>
+    <td class="tg-0pky">43.686920</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">16</td>
+    <td class="tg-0pky">44.660060</td>
+  </tr>
+</tbody>
+</table>
+</center>
+<p>Já se nota uma queda considerável no tempo de processamento, mais adiante vamos discutir estes resultados com mais detalhes.</p>
+<h3 id="threads">Threads<a href="#threads" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>As threads são os fluxos de execução de um programa, um exemplo muito comum aos estudantes de computação é o uso de threads para gerenciar conexões em um programa servidor.</p>
+<p>Assim, um programa costuma ter múltiplas threads executando diferentes atividades, e devido a sua característica de compartilhar o espaço de endereçamento, elas costumam ser mais leves que programas e também podem ser mais simples  de implementar.</p>
+<p>A lógica do código que se utiliza de threads segue muito próxima ao que foi implementado no código anterior, porém agora usamos a biblioteca <code>pthreads</code> e as funções <code>pthread_create()</code> para criar cada unidade de processamento e <code>pthread_join()</code> para aguardar o fim das threads.</p>
+<p>Um detalhe importante, para a sua implementação, é necessário criar uma struct que armazena os parâmetros necessários para o cálculo dos elementos da matriz. Sabendo disto, o código ficará assim:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// Criando struct para passar como parâmetro da função de multiplicação
+</span></span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">parametrosThread</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">inicio</span><span class="p">,</span> <span class="n">fim</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">*</span><span class="n">matrizA</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">*</span><span class="n">matrizB</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">*</span><span class="n">matrizC</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">nomeArquivo</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>Trecho do código executando dentro da função <code>main()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// Vetor de threads e parâmetros de therads
+</span></span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pthread_t</span><span class="o">&gt;</span> <span class="n">threads</span><span class="p">(</span><span class="n">numThreads</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">parametrosThread</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">(</span><span class="n">numThreads</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Cria as threads com os parametros necessários
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">numThreads</span><span class="p">;</span> <span class="n">t</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">inicio</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="n">divThreads</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// fim da parte (ultima thread pega o resto)
+</span></span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">fim</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">numThreads</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="nl">n1</span> <span class="p">:</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">divThreads</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">matrizA</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">matrizA</span><span class="p">;</span> <span class="c1">// Passando as matrizes por ref
+</span></span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">matrizB</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">matrizB</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">matrizC</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">matrizC</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">m1</span> <span class="o">=</span> <span class="n">m1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">m2</span> <span class="o">=</span> <span class="n">m2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// Defininfo nome dos arquivos de cada thread em casa it
+</span></span></span><span class="line"><span class="cl">    <span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">nomeArquivo</span> <span class="o">=</span> <span class="s">&#34;resultadoThreads&#34;</span><span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span> <span class="o">+</span><span class="s">&#34;_T&#34;</span> 
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">numThreads</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="s">&#34;_it&#34;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">it</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="s">&#34;_t&#34;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#34;.txt&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Cria efetivamente as threads
+</span></span></span><span class="line"><span class="cl">    <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="k">nullptr</span><span class="p">,</span> <span class="n">multiplicaMatriz</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">args</span><span class="p">[</span><span class="n">t</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// esperando fim das threads
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">numThreads</span><span class="p">;</span> <span class="n">t</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pthread_join</span><span class="p">(</span><span class="n">threads</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="k">nullptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Após a rodada de teste obtivemos os seguintes resultados:</p>
+<center>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-c3ow">Nº de threads</th>
+    <th class="tg-c3ow">Tempo médio (s)</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">2</td>
+    <td class="tg-0pky">66.371630</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">38.835990</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">8</td>
+    <td class="tg-0pky">39.699380</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">16</td>
+    <td class="tg-0pky">40.101380</td>
+  </tr>
+</tbody>
+</table>
+</center>
+<p>Logo de cara já dá pra notar o tempo ligeiramente menor de processamento, mas também que o ganho de tempo por paralelização fica estagnado e até mesmo se reverte conforme se aumenta o número de threads.</p>
+<h2 id="entendendo-os-resultados">Entendendo os resultados<a href="#entendendo-os-resultados" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Começando logo de cara com um gráfico pra gente entender como ficaram os tempos, vemos alguns ponto (inclusive já citados anteriormente).</p>
+<ol>
+<li>O ganho por paralelização é imediato;</li>
+<li>A queda do tempo não possui um comportamento linear;</li>
+<li>A partir de 4 threads, o ganho começa a se reverter.</li>
+<li>O tempo dos processos é maior que os das threads</li>
+</ol>
+<div style="text-align: center;">
+  <img src="comparativo3200.png" width="500">
+</div>
+<p>Vamos discutir por partes o que foi que aconteceu aqui com o norte do que pontuamos anteriormente.</p>
+<h3 id="1-o-ganho-por-paralelização-é-imediato">1. O ganho por paralelização é imediato<a href="#1-o-ganho-por-paralelização-é-imediato" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Como esperado, ao dividirmos o trabalho de processamento, o tempo de processamento total foi cortado quase pela metade apenas com 2 unidades de processamento.</p>
+<blockquote>
+<p>Por que não caiu pela metade?</p>
+</blockquote>
+<p>Bom, note que o tempo de processamento não envolve APENAS o processamento da matriz, é importante ter em mente que o processador também tem que criar as threads/processos, tendo assim também mais um custo de processamento, e isto também se reflete nos resultados entre cada tipo de implementação, mas vamos tratar disto depois.</p>
+<h3 id="2-a-queda-do-tempo-não-possui-um-comportamento-linear">2. A queda do tempo não possui um comportamento linear<a href="#2-a-queda-do-tempo-não-possui-um-comportamento-linear" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Isso foi citado lá no começo do artigo, mas vale a pena ver de novo. O ganho por paralelização não é linear por que há um limite ao qual é possível dividir uma atividade.</p>
+<p>No nosso caso de multiplicação de matrizes, teríamos como um suposto limite o elemento da matriz resultado, onde cada unidade de processamento calcularia apenas um elemento da matriz. Na prática esse não seria o limite, não sei se há um computador que aguentaria a criação de tantos processos/threads.</p>
+<h3 id="3-a-partir-de-4-threads-o-ganho-começa-a-se-reverter-complemento-do-ponto-2">3. A partir de 4 threads, o ganho começa a se reverter (complemento do ponto 2)<a href="#3-a-partir-de-4-threads-o-ganho-começa-a-se-reverter-complemento-do-ponto-2" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Os programas foram executados em um computador com CPU Intel i5-1135G7 com a configuração do sistema priorizando o desempenho.</p>
+<div style="text-align: center;">
+  <img src="Pasted image 20260423115319.png" width="500">
+  <figcaption align="center">Fonte: <a href="https://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+i5-1135G7+%40+2.40GHz&id=3830">PassMark Software</a>. </figcaption>
+</div>
+<p>O processador que utilizei nos testes possui apenas 4 núcleos físicos e 8 Threads, que basicamente dividem o núcleo em duas filas de execução. Aqui já podemos ter uma resposta para o aumento do tempo de processamento.  Antes, com apenas 4 unidades de execução, o programa não precisava disputar o núcleo com outras threads/processos (desconsiderando o próprio SO e outros programas), então a sua tendência seria a um tempo menor de processamento até <strong>N = 4</strong>, onde cada unidade de execução teria um núcleo para chamar de seu.</p>
+<p>Conforme se incrementa o número de threads/processos para 8 ou 16, estes começam a ter que esperar seu momento na fila de processamento enquanto outro processo está sendo executado. Também temos o custo de tempo de troca de contexto (troca do programa que está sendo executado) daí temos a explicação do aumento do tempo.</p>
+<p>Outro fator interessante que pode influenciar é a memória cache, onde com mais tarefas, elas passam a dividir a memória cache, especialmente a L3 que é compartilhada; e muito possivelmente alguns dados foram alocados na memória RAM devido ao seu tamanho. Vale citar que a memória cache é a mais rápida e com menor latência para o processador, fora que esse processo de &ldquo;Trashing&rdquo; toma também tempo para ser executado.</p>
+<h3 id="4-o-tempo-dos-processos-é-maior-que-os-das-threads">4. O tempo dos processos é maior que os das threads<a href="#4-o-tempo-dos-processos-é-maior-que-os-das-threads" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>O tempo usando processos ser maior é algo esperado, já estes não compartilham o mesmo espaço de memória, ou seja, o computador tem que fazer uma cópia da matriz (ou a fatia) para cada processo filho criado, ao passo que, conforme se incrementa o tamanho dos dados, mais impactante serão estas operações de cópia.</p>
+<p>Por outro lado, as threads compartilham o mesmo espaço de endereçamento e a comunicação entre elas se torna muito menos custosa, então cada thread, mesmo que diferente, aponta para a mesma matriz, e, consequentemente poupa estas operações de cópia. Também cabe citar que a troca de contexto de um processo também é mais caro que a de uma thread, onde com o aumento das unidades de processamento, como 8 ou 16, leva consequentemente ao maior número de trocas de contexto.</p>
+<h2 id="finalizando">Finalizando<a href="#finalizando" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Com base em tudo que vimos no artigo, podemos dizer que as threads são melhores que processos, certo? Depende&hellip; As threads com certeza são mais rápidas, porém os processos oferecem algo muito interessante que é a segurança e independência. Caso uma thread venha a causar algum erro ela pode afetar as demais e até mesmo o programa, já o processo A sofrendo um ataque ou causando algum erro, pode ser encerrado sem que os outros processos sejam afetados.</p>
+<p>Agora, depois de escrever tudo isso eu percebi que não falei nada sobre o uso de 100% da CPU, mas vou tratar disso agora.</p>
+<h2 id="comentários">Comentários<a href="#comentários" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Este artigo se originou de um trabalho que fiz pra disciplina de Sistemas Operacionais na faculdade, é basicamente o que apresentei: Multiplicar matrizes de forma sequencial, com múltiplos processos e multithreading.</p>
+<p>Aqui eu fiz apenas com uma matriz de ordem 3200, no trabalho eu tive que fazer com matriz de 100, 200, 400, 800, 1600, 3200 e 4000. Isso por que a atividade exigia que o tamanho da matriz dobrasse até que o tempo sequencial fosse ao menos 3 minutos. 3200 vimos que foi um pouco mais que 2 min, com 6400 o tempo ultrapassou 11 minutos, então o professor permitiu diminuir.</p>
+<p>No título eu falo que usa 100% do disco do computador, e de fato usa; porém, também usa 100% do disco porque a atividade exigia a gravação dos arquivos de resultado.</p>
+<p>Resultado final:</p>
+<div style="text-align: center;">
+  <img src="Pasted image 20260424093810.png" width="300">
+</div>
+<p>Sim, 52 gb de arquivos, para todos os resultados e os códigos feitos, incluindo shellscripts que fiz para automatizar os testes.</p>
+<p>E sobre o uso de 100% da CPU, isso acontece quando usamos as 8 threads, onde de fato o computador n tem como fugir de usar tudo que tem para processar a tarefa. Abaixo eu coloquei uma imagem que mostra o que acontece quando executamos o processamento de uma matriz 4000x4000  usando 8 threads:</p>
+<div style="text-align: center;">
+  <img src="Pasted image 20260424095129.png">
+</div>
+<p>Veja que nem todos os núcleos estão em 100% de uso, e inclusive, o gráfico mostra uma flutuação constante entre o percentual de uso dos núcleos lógicos (inclui as threads), provavelmente por que escalonador da CPU mandou a tarefa pro núcleo que estivesse disponível, mas sempre temos 4 núcleos sendo usados em 100%. A próxima imagem mostra quando usamos 8 threads na multiplicação.</p>
+<div style="text-align: center;">
+  <img src="Pasted image 20260424095348.png">
+</div>
+<p>Aqui, a CPU está usando todos os núcleos lógicos pro cálculo dos elementos da matriz e a 100% de uso, ou valores próximos justamente por conta do volume de operações a ser realizado, mas podemos confirmar isso processando uma matriz de ordem 100.</p>
+<div style="text-align: center;">
+  <img src="processamento100.png">
+</div>
+<p>Como podemos ver, o pico de uso do processamento com uma matriz pequena é muito baixo, justamente por ser um problema de baixa complexidade com pouca operações a serem realizadas.</p>
+<p>Depois de ver tudo isso, se quiser usar 100% do seu CPU também, você pode baixar os aquivos aqui:</p>
+<div class="pagination">
+    <div class="pagination__buttons">
+        <a href="/arquivosMatriz.zip" class="button next" download>
+            <span class="button__icon">💾</span>
+            <span class="button__text">BAIXAR ARQUIVO</span>
+        </a>
+    </div>
+</div>
+<p>Dentro do zip você vai ter os seguintes arquivos:</p>
+<ul>
+<li><strong>programaAuziliar.cpp:</strong> Este é o código que cria as matrizes preenchidas com valores aleatórios;</li>
+<li><strong>sequencial.cpp:</strong> Este faz o cálculo da multiplicação de matrizes usando os arquivos gerados pelo programa auxiliar;</li>
+<li><strong>threads.cpp:</strong> Realiza o processo de cálculo usando multithreading;</li>
+<li><strong>process.cpp:</strong> Realiza o cálculo dos elementos a partir de processos;</li>
+<li><strong>executaTestes.sh:</strong> Esse script roda os testes de forma automatizada. (tem que modificar no windows)</li>
+<li><strong>extraiResultados.py:</strong> Se você usou o anterior, esse vai extrair os resultados da quantidade imensa de arquivos.</li>
+</ul>
+<p>Dentro do <code>.zip</code> também tem o relatório que produzi do trabalho.</p>
+<p>Outra informação importante é que os códigos de multiplicação de matriz recebem os comandos na linha de comando pra executar, então deem preferência pra usar esse método ou modifiquem para que seja executado com a biblioteca <code>iostream</code> do cpp.</p>
+<p>Caso queira manter com linha de comando, vou mostrar um exemplo de como compilar e executar o <code>programaAuziliar.cpp</code> e o <code>threads.cpp</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># compilando programaAuziliar.cpp e threads.cpp</span>
+</span></span><span class="line"><span class="cl">g++ -O3 programaAuziliar.cpp -o auxiliar
+</span></span><span class="line"><span class="cl">g++ -O3 threads.cpp -lpthread -o threads <span class="c1"># só o threads.cpp requer -lpthread</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># executando programaAuziliar.cpp para matriz 1200x1200</span>
+</span></span><span class="line"><span class="cl">./auziliar <span class="m">1200</span> <span class="m">1200</span> <span class="m">1200</span> <span class="m">1200</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># executando threads.cpp para matriz anterior com 2 threads</span>
+</span></span><span class="line"><span class="cl">./threads matrizA1200.txt matrizB1200.txt <span class="m">2</span>
+</span></span></code></pre></div><p>E isso é tudo pessoal! Espero que tenham gostado do artigo e divirtam-se testando esse código. Até o próximo artigo!!</p>
+
+      </div></div>
+
+  
+    
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2026 Powered by <a href="https://gohugo.io">Hugo</a></span>
+    
+      <span>:: <a href="https://github.com/mirus-ua/hugo-theme-re-terminal" target="_blank">Theme</a> made by <a href="https://github.com/mirus-ua" target="_blank">Mirus</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

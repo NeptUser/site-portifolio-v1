@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Pedro Costa | Portfolio</title>
+    <link>https://neptuser.github.io/tags/</link>
+    <description>Recent content in Tags on Pedro Costa | Portfolio</description>
+    <generator>Hugo</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Thu, 16 Apr 2026 16:50:58 -0500</lastBuildDate>
+    <atom:link href="https://neptuser.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Matrizes</title>
+      <link>https://neptuser.github.io/tags/matrizes/</link>
+      <pubDate>Thu, 16 Apr 2026 16:50:58 -0500</pubDate>
+      <guid>https://neptuser.github.io/tags/matrizes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Paralelismo</title>
+      <link>https://neptuser.github.io/tags/paralelismo/</link>
+      <pubDate>Thu, 16 Apr 2026 16:50:58 -0500</pubDate>
+      <guid>https://neptuser.github.io/tags/paralelismo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Process</title>
+      <link>https://neptuser.github.io/tags/process/</link>
+      <pubDate>Thu, 16 Apr 2026 16:50:58 -0500</pubDate>
+      <guid>https://neptuser.github.io/tags/process/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Threads</title>
+      <link>https://neptuser.github.io/tags/threads/</link>
+      <pubDate>Thu, 16 Apr 2026 16:50:58 -0500</pubDate>
+      <guid>https://neptuser.github.io/tags/threads/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
